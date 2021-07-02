@@ -1,23 +1,32 @@
-/* 이게 왜 중요하냐!
-이벤트를 다른 함수에서 handle할 수 있기 때문  */
-export const useInput = (initialVlaue, validator) => {
-    const [value, setVlaue] = useState(initialVlaue);
-    /* 여기까지 value는 "Mr." 이라는 string이지만
-    { value } 는 { value : value } 를 리턴함 */
-    const onChange = (event) => {
-      const {
-        target: { value }
-      } = event;
+import React, { useState } from "react";
+/* 
+  const maxLength = 10;
+  function isInputLengthSmallerThanMaxLength(value) {
+    return value.length <= maxLength
+  }
+  const name = useInput('Mr.', doesIncludeBannedChar)
   
-      let willUpdate = true;
+  const bannedChar = "@";
+  function doesIncludeBannedChar(value) {
+    return !value.includes(bannedChar)
+  }
+
+  funtion App() {
+    return (
+      <div className="App">
+        <input placeholder="Name" {...name}>
+      </div>
+    )
+  }
+*/
+export const useInput = (initialValue, isValidated) => {
+  const [value, setValue] = useState(initialValue);
   
-      if (typeof validator === "function") {
-        willUpdate = validator(value);
-      }
-      if (willUpdate) {
-        setVlaue(value);
-      }
-    };
-  
-    return { value, onChange }
+  function onChange(e) {
+    const { target : {value} } = e
+    if (isValidated(value)) {
+        setValue(value)
+    }
+  }
+  return {value, onChange}
 }

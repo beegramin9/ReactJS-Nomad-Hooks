@@ -1,7 +1,11 @@
+import React, {useState, useEffect} from "react";
+
 /* useEffect는
 componentWillUnmount, Didmount, willUpdate와 비슷하다. 
-주로 API에서 데이터를 */
+주로 API에서 데이터를 가져올 때 사용할 수 있다 */
 function App() {
+    /* 넣은 함수에 return이 없으면, didMount와 didUpdate만 쓰이지만
+    return () => {} 처럼 함수를 리턴하면 willUnmount로 사용한다. */
     const sayHello = () => console.log("hello");
   
     const [number, setNumber] = useState(0);
@@ -18,7 +22,7 @@ function App() {
     array 안의 변수가 바뀔 때에만 실행된다
     만약 number가 바뀔때만 hello가 나오게 하려면? [number]만 써주면 됨
     => array 원소가 하나일때를 말하는 것
-    맨 처음에만 실행하고 싶으면 빈 어레이(디펜던시) [] 만 주면 된다.
+    맨 처음에만 실행하고 싶으면 비어있는 [] 만 주면 된다.
     */
     useEffect(sayHello, [number]);
   
