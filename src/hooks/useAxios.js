@@ -35,6 +35,7 @@ export const useAxios = (options, axiosInstance = defaultAxios) => {
         });
         setTrigger(Date.now()) /* 현재시간 */
     }
+
     useEffect( ()=>{
         /* Promise */
         axiosInstance(options).then(data => {
@@ -42,10 +43,18 @@ export const useAxios = (options, axiosInstance = defaultAxios) => {
         }).catch(error => {
             setState({...state, loading: false, error: error})
         }) 
+        // if [], run once when useAxios render
+        //
     }, [trigger])
     
     if (!options) {
         return;
     }
+    /* useEffect가 시간이 많이 걸려서 loading: true일때의 state가 먼저
+    return이 되기때문에 에러가 발생한다 */
+    /* componentWillMount, DidMount는 render 전후 실행이 명확했지만,
+    useEffect()는 대용으로 쓸 수는 있어도 시간이 걸리는 함수이기 때문에
+    이와 같은 에러가 발생한다 */
+    /* 굳이 loading이란 변수를 리턴하지 않고 할 수 없을까? */
     return {...state, refetchApi};
 }
