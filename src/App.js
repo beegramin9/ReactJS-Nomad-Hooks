@@ -12,9 +12,11 @@ import { useFullScreen } from "./hooks/useFullScreen";
 import { arrayOfContent } from './constants/forUseTabs'; 
 import { useNotification } from "./hooks/useNotification";
 */
-import {useAxios} from "./hooks/useAxios"
-
+import {useAxios} from "./hooks/custom/useAxios";
+import {Counter, Info} from "./hooks/builtin/useReducer";
+import {Average} from "./hooks/builtin/useMemo";
 function App() {
+
   const url = "https://yts.mx/api/v2/list_movies.json"
   const  {loading, data, error, refetchApi}= useAxios(url)
   // console.log(`loading:${loading}\ndata:${JSON.stringify(data)}\nerror:${error}`);
@@ -38,6 +40,9 @@ function App() {
         <h1>{data && data.status}</h1>
         <h2>{loading && "Loading"}</h2>
       </div>
+      <Counter/>
+      <Info/>
+      <Average/>
       <button onClick={refetchApi}>Refetch</button>
         <p>{JSON.stringify(data)}</p>
     </div>
